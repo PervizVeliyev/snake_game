@@ -8,9 +8,9 @@ import java.util.stream.Collectors;
 public class Lee {
     private final static List<LeePoint> deltas = new ArrayList<LeePoint>(){{
         add(new LeePoint(0,-1));
+        add(new LeePoint(1,0));
+        add(new LeePoint(0,1));
         add(new LeePoint(-1,0));
-        add(new LeePoint(+1,0));
-        add(new LeePoint(0,+1));
     }};
     private final static int OBSTACLE = -10;
     private final static int START = -1;
@@ -98,14 +98,14 @@ public class Lee {
     }
 
     public Optional<List<LeePoint>> trace(Point start, Point finish, List<Point> obstacles, boolean debug) {
-        return trace(
+        return trace1(
                 new LeePoint(start),
                 new LeePoint(finish),
                 obstacles.stream().map(LeePoint::new).collect(Collectors.toList()),
                 debug);
     }
 
-    public Optional<List<LeePoint>> trace(LeePoint start, LeePoint finish, List<LeePoint> obstacles, boolean debug) {
+    public Optional<List<LeePoint>> trace1(LeePoint start, LeePoint finish, List<LeePoint> obstacles, boolean debug) {
         initBoard(obstacles);
         boolean found = false;
         set(start, START);
@@ -177,6 +177,19 @@ public class Lee {
             curr_p = prev_p;
         }
         Collections.reverse(path);
-        return path.size() > 1 ? path.get(1) : new LeePoint(0, 0);
+        LeePoint result = dfs(path.get(0));
+        if(trace1(start, finish, obstacles, false).isPresent()) return result;
+        else {
+            set(dfs(path.get(0)), OBSTACLE);
+            return dfs(path.get(0));
+        }
+    }
+
+    public LeePoint dfs(LeePoint from) {
+        for(int i = 3; i >= 0; i--)
+        {
+            if(get(deltas.get(i).move(from)) != OBSTACLE && isOnBoard(deltas.get(i).move(from))) return deltas.get(i).move(from);
+        }
+        return new LeePoint(0, 0);
     }
 }

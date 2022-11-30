@@ -83,6 +83,12 @@ public class Board extends AbstractBoard<Elements> {
         return result;
     }
 
+    public List<Point> getBarriersWithoutStone(){
+        List<Point> result = getSnake();
+        result.addAll(getWalls());
+        return result;
+    }
+
     public List<Point> getSnake() {
         Point head = getHead();
         if (head == null) {
