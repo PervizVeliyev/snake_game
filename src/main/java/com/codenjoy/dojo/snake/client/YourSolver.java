@@ -29,9 +29,7 @@ import com.codenjoy.dojo.services.Dice;
 import com.codenjoy.dojo.services.Direction;
 import com.codenjoy.dojo.services.RandomDice;
 
-/**
- * User: your name
- */
+
 public class YourSolver implements Solver<Board> {
 
     private Dice dice;
