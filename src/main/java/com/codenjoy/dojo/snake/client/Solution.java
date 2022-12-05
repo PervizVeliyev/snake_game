@@ -13,6 +13,7 @@ public class Solution {
         List<Point> obstacles = board.getBarriers();
         Point start = board.getHead();
         Point stone = board.getStones().get(0);
+
         if(lee.trace(start, apple, obstacles).isPresent()){
             List<LeePoint> path = lee.trace(start, apple, obstacles).get();
             LeePoint nextMove = path.size() > 1 ? path.get(1) : new LeePoint(0,0);
@@ -21,7 +22,7 @@ public class Solution {
             else if(nextMove.x() == start.getX() && nextMove.y() < start.getY()) return Direction.DOWN;
             else return Direction.UP;
         }
-        else if(board.getSnake().size() >= 50 && lee.trace(start, stone, board.getBarriersWithoutStone()).isPresent()){
+        else if(board.getSnake().size() >= 55 && lee.trace(start, stone, board.getBarriersWithoutStone()).isPresent()){
             List<LeePoint> path = lee.trace(start, stone, board.getBarriersWithoutStone()).get();
             LeePoint nextMove = path.size() > 1 ? path.get(1) : new LeePoint(0,0);
             if(nextMove.y() == start.getY() && nextMove.x() > start.getX()) return Direction.RIGHT;

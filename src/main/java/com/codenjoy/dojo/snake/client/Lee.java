@@ -177,12 +177,12 @@ public class Lee {
             curr_p = prev_p;
         }
         Collections.reverse(path);
-        LeePoint result = dfs(path.get(0));
-        if(trace1(start, finish, obstacles, false).isPresent()) return result;
-        else {
+        for(int i = 0; i < 4; i++) {
+            LeePoint result = dfs(path.get(0));
+            if (trace1(start, finish, obstacles, false).isPresent()) return result;
             set(dfs(path.get(0)), OBSTACLE);
-            return dfs(path.get(0));
         }
+        return new LeePoint(0, 0);
     }
 
     public LeePoint dfs(LeePoint from) {
